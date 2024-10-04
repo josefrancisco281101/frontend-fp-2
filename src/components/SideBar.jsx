@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { TieredMenu } from 'primereact/tieredmenu';
 import { AuthContext } from '../context/AuthContext';
 import { useLocation } from 'wouter';
-
+import './sideBar.css'
 export default function SideBar() {
     const [location, setLocation] = useLocation();   
     const { user } = useContext(AuthContext);
@@ -36,8 +36,8 @@ export default function SideBar() {
     const items = user?.role === 'admin' ? menuAdmin : menuResident;
 
     return (
-        <aside>
-            <TieredMenu model={items} breakpoint='700px' />
+        <aside >
+            <TieredMenu model={items}  breakpoint='700px' />
         </aside>
     );
 }

@@ -1,0 +1,19 @@
+.p-tieredmenu ul li {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+}
+
+.p-tieredmenu ul li .p-menuitem-text {
+    font-size: 1rem; 
+    font-weight: bold;  
+   
+    margin-bottom: 1rem;
+}
+
+.p-tieredmenu ul li .pi {
+    font-size: 1rem;
+}
+
+
