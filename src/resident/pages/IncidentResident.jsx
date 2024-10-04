@@ -18,14 +18,8 @@ export default function IncidentResident() {
     useEffect(() => {
         const fetchIncidents = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/incidents'); 
-               
-              
-
-
-               
-                const filteredIncidents = response.data.filter(incident => incident.user_id === user.user_id);
-                setIncidents(filteredIncidents); 
+                const response = await axios.get(`http://localhost:3000/api/incidents/user/${user.user_id}`);
+                setIncidents(response.data);
                 
             } catch (error) {
                 console.error('Error al obtener las incidencias:', error);
