@@ -13,9 +13,12 @@ function Dashboard({ section }) {
             case '/incident-create':
                 return  ;
 
-            case '/request/:id':
+                case '/request':
                 return ;
-                
+
+            // case '/request/:id':
+            //     return ;
+            
               
             default:
                 return <h2 className='text-2xl font-bold'>Bienvenido {user ? user.f_name : 'Usuario'}</h2>;

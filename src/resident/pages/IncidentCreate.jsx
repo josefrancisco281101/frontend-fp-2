@@ -6,7 +6,6 @@ import { RadioButton } from 'primereact/radiobutton';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import { FileUpload } from 'primereact/fileupload';
 import { AuthContext } from '../../context/AuthContext';
 export default function IncidentCreate() {
     const { user } = useContext(AuthContext);
@@ -15,46 +14,42 @@ export default function IncidentCreate() {
   const [selectedType, setSelectedType] = useState(null);
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
-  const [priority, setPriority] = useState('Normal');
-  const [image, setImage] = useState(null); 
+  const [priority, setPriority] = useState('Normal');  
   const toast = useRef(null);
 
   const incidentTypes = [
-    { label: 'Fallo técnico', value: 'technical' },
-    { label: 'Solicitud de mejora', value: 'improvement' },
+    { label: 'plomeria ', value: 'plumbing' },
+    { label: 'electricidad', value: 'electricity' },
+    { label: 'areas comunes', value: 'common_area' },
     { label: 'Otro', value: 'other' }
   ];
 
   const priorities = ['Alta', 'Media', 'Normal', 'Baja'];
 
-  const handleImageUpload = (e) => {
-    setImage(e.files[0]);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!user) {
-        toast.current.show({ severity: 'warn', summary: 'Error', detail: 'Debe estar logueado para reportar una incidencia', life: 3000 });
+      toast.current.show({ severity: 'warn', summary: 'Error', detail: 'Debe estar logueado para reportar una incidencia', life: 3000 });
       return;
     }
-
-   
-    const incidentData = new FormData();
-    incidentData.append('title', title);
-    incidentData.append('type', selectedType.value);
-    incidentData.append('description', description);
-    incidentData.append('location', location);
-    incidentData.append('priority', priority);
-    incidentData.append('userId', user.id); 
-    incidentData.append('status', 'Pendiente'); 
-    if (image) {
-      incidentData.append('image_url', image); 
-    }
-
+  
+      const incidentData = {
+      userId: user.user_id,
+      title,
+      description,
+      location,
+      type: selectedType,
+      priority,
+      status: "reported"    };
+  
+    console.log(incidentData); 
+  
     try {
       const response = await axios.post('http://localhost:3000/api/incidents', incidentData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: {
+          'Content-Type': 'application/json'        }
       });
       console.log(response.data);
       toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Incidencia reportada', life: 3000 });
@@ -63,7 +58,7 @@ export default function IncidentCreate() {
       toast.current.show({ severity: 'error', summary: 'Error', detail: 'Hubo un error al reportar la incidencia', life: 3000 });
     }
   };
-
+  
   return (
     <Layout>
       <div className='incident-create'>
@@ -72,17 +67,17 @@ export default function IncidentCreate() {
           
           <div className='field'>
             <label htmlFor="title" className="block font-bold">Título:</label>
-            <InputText id="title" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full" />
+            <InputText id="title" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full" name='title' />
           </div>
 
           <div className='field'>
             <label htmlFor="description" className="block font-bold">Descripción de la Incidencia:</label>
-            <InputText id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full" />
+            <InputText id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full" name='description' />
           </div>
 
           <div className='field'>
             <label htmlFor="location" className="block font-bold">Ubicación:</label>
-            <InputText id="location" value={location} onChange={(e) => setLocation(e.target.value)} className="w-full" />
+            <InputText id="location" value={location} onChange={(e) => setLocation(e.target.value)} className="w-full" name='location' />
           </div>
 
           <div className='field'>
@@ -94,6 +89,7 @@ export default function IncidentCreate() {
               onChange={(e) => setSelectedType(e.value)}
               placeholder="Seleccionar tipo de incidencia"
               className="w-full"
+              name='type'
             />
           </div>
 
@@ -111,11 +107,6 @@ export default function IncidentCreate() {
                 <label htmlFor={level}>{level}</label>
               </div>
             ))}
-          </div>
-
-          <div className='field'>
-            <label htmlFor="image" className="block font-bold">Subir Imagen (Opcional):</label>
-            <FileUpload name="image" accept="image/*" customUpload uploadHandler={handleImageUpload} mode="basic" auto />
           </div>
 
           <Button type="submit" label="Reportar Incidencia" severity="info" />
