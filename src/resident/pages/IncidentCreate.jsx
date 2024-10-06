@@ -36,7 +36,7 @@ export default function IncidentCreate() {
     }
   
       const incidentData = {
-      userId: user.user_id,
+       userId: user.user_id,
       title,
       description,
       location,
@@ -44,14 +44,14 @@ export default function IncidentCreate() {
       priority,
       status: "reported"    };
   
-    console.log(incidentData); 
+   
   
     try {
       const response = await axios.post('http://localhost:3000/api/incidents', incidentData, {
         headers: {
           'Content-Type': 'application/json'        }
       });
-      console.log(response.data);
+      
       toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Incidencia reportada', life: 3000 });
     } catch (error) {
       console.error(error.message);

@@ -7,6 +7,7 @@ import ProtectedRoute from './pages/ProtectedRoute';
 //componentes de residente
 import IncidentCreate from './resident/pages/IncidentCreate';
 import IncidentResident from './resident/pages/IncidentResident';
+import IncidentDetails from './resident/pages/IncidentDetails';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
         <Route path='/dashboard' component={() => <Dashboard section="/dashboard"/>} />
         <Route path="/incident-create" component={() => <IncidentCreate section="/incident-create" />} />
         <Route path="/request" component={() => <IncidentResident section="/request" />} />
-        {/* <Route path="/request/:id" component={() => <IncidentResident section="/request" />} /> */}
+        <Route path="/incident/:id" component={() => <IncidentDetails section="/incident/:id" />} />
            
         </ProtectedRoute>
   

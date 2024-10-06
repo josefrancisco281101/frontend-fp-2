@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 
 import { useLocation } from 'wouter';
 
-function IncidentCard({ incident_id, title }) {
+function IncidentCard({ id, title }) {
 
     const [, navigate] = useLocation();
     return (
         <div 
             className='Card p-4 border rounded shadow hover:shadow-lg cursor-pointer'
-            onClick={() => navigate(`/incident/${incident_id}`)}
+            onClick={() => navigate(`/incident/${id}`)}
         >
             <h3 className='text-xl font-semibold'>{title}</h3>
         </div>

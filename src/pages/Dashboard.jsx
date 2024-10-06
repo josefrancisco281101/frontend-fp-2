@@ -16,8 +16,8 @@ function Dashboard({ section }) {
                 case '/request':
                 return ;
 
-            // case '/request/:id':
-            //     return ;
+            case '/incident/:id':
+                return ;
             
               
             default:
