@@ -7,7 +7,11 @@ import ProtectedRoute from './pages/ProtectedRoute';
 //componentes de residente
 import IncidentCreate from './resident/pages/IncidentCreate';
 import IncidentResident from './resident/pages/IncidentResident';
+//Ambas vistas
 import IncidentDetails from './resident/pages/IncidentDetails';
+//Vista Admin
+import IncidentAdmin from './admin/pages/IncidentAdmin';
+import ResidentView from './admin/pages/ResidentView';
 
 
 function App() {
@@ -21,6 +25,9 @@ function App() {
         <Route path="/incident-create" component={() => <IncidentCreate section="/incident-create" />} />
         <Route path="/request" component={() => <IncidentResident section="/request" />} />
         <Route path="/incident/:id" component={() => <IncidentDetails section="/incident/:id" />} />
+        <Route path="/incident" component={() => <IncidentAdmin section="/incident" />} />
+        <Route path="/resident" component={() => <ResidentView section="/resident" />} />
+
            
         </ProtectedRoute>
   

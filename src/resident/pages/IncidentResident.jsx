@@ -26,7 +26,7 @@ export default function IncidentResident() {
                 const response = await axios.get(`http://localhost:3000/api/incidents/user/${user.user_id}`);
               
                 setIncidents(response.data);
-                console.log(response.data);
+               
 
             } catch (error) {
 

@@ -7,13 +7,13 @@ import SideBar from '../components/SideBar';
         <main >
           
            
-            <div className="flex-1 bg-slate-600"> 
+            <div className=""> 
                 <Nav />
                
             </div>
            <div className='flex'>
             
-           <div className="principal flex items-center bg-slate-300 w-1 h-screen"> 
+           <div className="principal flex items-center bg-slate-300 w-[240px] h-screen"> 
             <SideBar />
             </div>
             <div className="flex justify-center items-center text-center w-full">

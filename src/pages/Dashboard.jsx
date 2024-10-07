@@ -18,6 +18,13 @@ function Dashboard({ section }) {
 
             case '/incident/:id':
                 return ;
+
+                case '/incident':
+                return ;
+                
+                case '/resident':
+
+                return ;
             
               
             default:
