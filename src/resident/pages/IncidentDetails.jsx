@@ -42,7 +42,7 @@ export default function IncidentDetails() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:3000/api/incidents/incident/${incident_id}, incident`);
+            const response = await axios.put(`http://localhost:3000/api/incidents/incident/${incident_id}`, incident);
             if (response.status === 200) {
                 setIncident(response.data); 
                
