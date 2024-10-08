@@ -12,6 +12,7 @@ import IncidentDetails from './resident/pages/IncidentDetails';
 //Vista Admin
 import IncidentAdmin from './admin/pages/IncidentAdmin';
 import ResidentView from './admin/pages/ResidentView';
+import UserCreate from './admin/pages/UserCreate';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/incident/:id" component={() => <IncidentDetails section="/incident/:id" />} />
         <Route path="/incident" component={() => <IncidentAdmin section="/incident" />} />
         <Route path="/resident" component={() => <ResidentView section="/resident" />} />
+        <Route path="/create-resident" component={() => <UserCreate section="/create-resident" />} />
 
            
         </ProtectedRoute>

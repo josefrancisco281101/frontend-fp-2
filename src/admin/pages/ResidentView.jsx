@@ -4,11 +4,17 @@ import Layout from "../../layout/Layout";
 import { Toast } from "primereact/toast";
 import Loading from "../../components/Loading";
 import { Card } from "primereact/card";
+import { useLocation } from "wouter";
 
 export default function ResidentView() {
+    const [, navigate] = useLocation();
     const [residents, setResidents] = useState([]);
     const [loading, setLoading] = useState(true);
     const toast = useRef(null);
+
+    const handleNavigate = () => {
+        navigate("/create-resident");
+    }
 
     useEffect(() => {
         const fetchResidents = async () => {
@@ -37,6 +43,8 @@ export default function ResidentView() {
         <Layout>
             <Toast ref={toast} />
             <div className="p-4">
+
+                <button onClick={handleNavigate}>crear nuevo usuario</button>
                 <h2 className="text-2xl font-bold mb-4">Lista de Residentes</h2>
 
                 {residents.length > 0 ? (

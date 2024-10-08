@@ -25,6 +25,9 @@ function Dashboard({ section }) {
                 case '/resident':
 
                 return ;
+
+                case "/create-resident" :
+                return ;
             
               
             default:
