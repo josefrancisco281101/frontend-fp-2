@@ -2,12 +2,13 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import Layout from '../../layout/Layout';
-import { useRoute } from 'wouter';
+import { useRoute, useLocation } from 'wouter';
 import { Toast } from 'primereact/toast';
 import Loading from '../../components/Loading';
 
 export default function IncidentDetails() {
     const { user } = useContext(AuthContext);
+    const [, setLocation] = useLocation();
     const [incident, setIncident] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
@@ -20,6 +21,7 @@ export default function IncidentDetails() {
             try {
                 const response = await axios.get(`http://localhost:3000/api/incidents/incident/${incident_id}`);
                 setIncident(response.data);
+                
             } catch (error) {
                 console.error('Error al obtener los detalles de la incidencia:', error);
                 toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los detalles de la incidencia', life: 3000 });
@@ -40,17 +42,31 @@ export default function IncidentDetails() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:3000/api/incidents/incident/${incident_id}`, incident);
-            setIncident(response.data);
-            
-            setIsEditing(false);
-            toast.current.show({ severity: 'success', summary: 'Actualización exitosa', detail: 'La incidencia ha sido actualizada correctamente', life: 3000 });
+            const response = await axios.put(`http://localhost:3000/api/incidents/incident/${incident_id}, incident`);
+            if (response.status === 200) {
+                setIncident(response.data); 
+               
+                toast.current.show({ severity: 'success', summary: 'Actualización exitosa', detail: 'La incidencia ha sido actualizada correctamente', life: 3000 });
+            } else {
+                throw new Error('Error en la respuesta del servidor');
+            }
         } catch (error) {
             console.error('Error al actualizar la incidencia:', error);
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se pudo actualizar la incidencia', life: 3000 });
         }
     };
-
+    
+    const handleDeleteIncident = async () => {
+        try {
+            await axios.delete(`http://localhost:3000/api/incidents/incident/${incident_id}`);
+            toast.current.show({ severity: 'success', summary: 'Eliminación exitosa', detail: 'La incidencia ha sido eliminada correctamente', life: 3000 });
+            
+       
+        } catch (error) {
+            console.error('Error al eliminar la incidencia:', error);
+            toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar la incidencia', life: 3000 });
+        }
+    };
     if (loading) {
         return <Loading />;
     }
@@ -180,14 +196,56 @@ export default function IncidentDetails() {
                             )}
                         </div>
 
+                        {/* Campo imagen */}
+                        <div className="field">
+    <label className="block font-bold">Imagen:</label>
+    {isEditing ? (
+        <input
+            type="text"
+            name="image_url"
+            value={incident.image_url}
+            onChange={handleInputChange}
+            className="p-inputtext p-component"
+        />
+    ) : (
+        <img 
+            src={incident.image_url} 
+            alt="Imagen de la incidencia" 
+            style={{ maxWidth: '100%', maxHeight: '300px' }} 
+        />
+    )}
+</div>
+
+
                     </div>
 
                     {/* Botones de Guardar y Editar */}
                     {isEditing ? (
                         <div className="mt-4">
-                            <button type="submit" className="p-button p-component p-button-success" onClick={() => setIsEditing(false)}>Guardar Cambios</button>
+                            <button type="submit" className="p-button p-component p-button-success" onClick= {handleFormSubmit}>Guardar Cambios</button>
+
+                            <button className='mx-2' onClick={()=> {  if (user) {
+            
+            if (user.role === 'admin') {
+                setLocation('/incident');
+            } else {
+                setLocation('/request');
+            }
+        }}}>volver</button>
+                           
                             <button type="button" className="p-button p-component p-button-secondary ml-2" onClick={() => setIsEditing(false)}>
                                 Cancelar
+                            </button >
+                            <button  type="button" className="p-button p-component p-button-danger ml-2" onClick={ () => {handleDeleteIncident(); 
+                               if (user) {
+            
+            if (user.role === 'admin') {
+                setLocation('/incident');
+            } else {
+                setLocation('/request');
+            }
+        } }}>
+                         Eliminar Incidencia       
                             </button>
                         </div>
                     ) : (
