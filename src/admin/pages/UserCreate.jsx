@@ -43,13 +43,13 @@ export default function UserCreate() {
 
       toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Usuario creado exitosamente', life: 3000 });
       // Limpiar los campos después de enviar el formulario
-      setFName('');
-      setLName('');
-      setUsername('');
-      setEmail('');
-      setPassword('');
-      setImage('');
-      setRole(null);
+      // setFName('');
+      // setLName('');
+      // setUsername('');
+      // setEmail('');
+      // setPassword('');
+      // setImage('');
+      // setRole(null);
     } catch (error) {
       console.error('Error al crear el usuario:', error);
       toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se pudo crear el usuario', life: 3000 });

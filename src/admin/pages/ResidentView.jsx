@@ -49,8 +49,8 @@ export default function ResidentView() {
 
                 {residents.length > 0 ? (
                     <div className="p-grid">
-                        {residents.map((resident) => (
-                            <div key={resident.id} className="p-col-12 p-md-6 p-lg-4">
+                        {residents.map((resident, i) => (
+                            <div key={i} className="p-col-12 p-md-6 p-lg-4">
                                 <Card 
                                     title={`${resident.f_name} ${resident.l_name}`} 
                                     subTitle={`Correo: ${resident.email}`} 
