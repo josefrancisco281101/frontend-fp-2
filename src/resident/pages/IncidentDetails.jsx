@@ -89,171 +89,182 @@ export default function IncidentDetails() {
                 <h2 className="text-2xl font-bold mb-4">Detalles de la Incidencia</h2>
 
                 <form onSubmit={handleFormSubmit}>
-                    <div className="incident-details">
-                        {/* Campo título */}
-                        <div className="field">
-                            <label className="block font-bold">Título:</label>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    name="title"
-                                    value={incident.title}
-                                    onChange={handleInputChange}
-                                    className="p-inputtext p-component"
-                                />
-                            ) : (
-                                <p>{incident.title}</p>
-                            )}
-                        </div>
+    <div className="incident-details bg-white p-8 rounded-lg shadow-lg space-y-6">
+        {/* Campo título */}
+        <div className="field">
+            <label className="block text-lg font-semibold text-gray-700 mb-1">Título:</label>
+            {isEditing ? (
+                <input
+                    type="text"
+                    name="title"
+                    value={incident.title}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 rounded-md w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                />
+            ) : (
+                <p className="text-gray-600">{incident.title}</p>
+            )}
+        </div>
 
-                        {/* Campo descripción */}
-                        <div className="field">
-                            <label className="block font-bold">Descripción:</label>
-                            {isEditing ? (
-                                <textarea
-                                    name="description"
-                                    value={incident.description}
-                                    onChange={handleInputChange}
-                                    className="p-inputtextarea p-component"
-                                />
-                            ) : (
-                                <p>{incident.description}</p>
-                            )}
-                        </div>
+        {/* Campo descripción */}
+        <div className="field">
+            <label className="block text-lg font-semibold text-gray-700 mb-1">Descripción:</label>
+            {isEditing ? (
+                <textarea
+                    name="description"
+                    value={incident.description}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 rounded-md w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                />
+            ) : (
+                <p className="text-gray-600">{incident.description}</p>
+            )}
+        </div>
 
-                        {/* Campo tipo (type) */}
-                        <div className="field">
-                            <label className="block font-bold">Tipo de Incidencia:</label>
-                            {isEditing ? (
-                                <select
-                                    name="type"
-                                    value={incident.type}
-                                    onChange={handleInputChange}
-                                    className="p-inputtext p-component"
-                                >
-                                    <option value="plumbing">Plomería</option>
-                                    <option value="electricity">Electricidad</option>
-                                    <option value="common_area">Área común</option>
-                                    <option value="other">Otro</option>
-                                </select>
-                            ) : (
-                                <p>{incident.type}</p>
-                            )}
-                        </div>
+        {/* Campo tipo (type) */}
+        <div className="field">
+            <label className="block text-lg font-semibold text-gray-700 mb-1">Tipo de Incidencia:</label>
+            {isEditing ? (
+                <select
+                    name="type"
+                    value={incident.type}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 rounded-md w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                >
+                    <option value="plumbing">Plomería</option>
+                    <option value="electricity">Electricidad</option>
+                    <option value="common_area">Área común</option>
+                    <option value="other">Otro</option>
+                </select>
+            ) : (
+                <p className="text-gray-600">{incident.type}</p>
+            )}
+        </div>
 
-                        {/* Campo prioridad */}
-                        <div className="field">
-                            <label className="block font-bold">Prioridad:</label>
-                            {isEditing ? (
-                                <select
-                                name="priority"
-                                value={incident.priority}
-                                onChange={handleInputChange}
-                                className="p-inputtext p-component"
-                            >
-                                <option value="alta">alta</option>
-                                <option value="media">media</option>
-                                <option value="normal">normal</option>
-                                <option value="baja">baja</option>
-                            </select>
-                            ) : (
-                                <p>{incident.priority}</p>
-                            )}
-                        </div>
+        {/* Campo prioridad */}
+        <div className="field">
+            <label className="block text-lg font-semibold text-gray-700 mb-1">Prioridad:</label>
+            {isEditing ? (
+                <select
+                    name="priority"
+                    value={incident.priority}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 rounded-md w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                >
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="normal">Normal</option>
+                    <option value="baja">Baja</option>
+                </select>
+            ) : (
+                <p className="text-gray-600">{incident.priority}</p>
+            )}
+        </div>
 
-                        {/* Campo estado (status) */}
-                        <div className="field">
-                            <label className="block font-bold">Estado:</label>
-                            {isEditing && user.role === 'admin' ? (
-                                <select
-                                    name="status"
-                                    value={incident.status}
-                                    onChange={handleInputChange}
-                                    className="p-inputtext p-component"
-                                >
-                                    <option value="reported">Reportado</option>
-                                    <option value="in_progress">En progreso</option>
-                                    <option value="resolved">Resuelto</option>
-                                </select>
-                            ) : (
-                                <p>{incident.status}</p>
-                            )}
-                        </div>
+        {/* Campo estado (status) */}
+        <div className="field">
+            <label className="block text-lg font-semibold text-gray-700 mb-1">Estado:</label>
+            {isEditing && user.role === 'admin' ? (
+                <select
+                    name="status"
+                    value={incident.status}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 rounded-md w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                >
+                    <option value="reported">Reportado</option>
+                    <option value="in_progress">En progreso</option>
+                    <option value="resolved">Resuelto</option>
+                </select>
+            ) : (
+                <p className="text-gray-600">{incident.status}</p>
+            )}
+        </div>
 
-                        {/* Nuevo Campo Location */}
-                        <div className="field">
-                            <label className="block font-bold">Ubicación:</label>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    name="location"
-                                    value={incident.location}
-                                    onChange={handleInputChange}
-                                    className="p-inputtext p-component"
-                                />
-                            ) : (
-                                <p>{incident.location}</p>
-                            )}
-                        </div>
+        {/* Campo ubicación */}
+        <div className="field">
+            <label className="block text-lg font-semibold text-gray-700 mb-1">Ubicación:</label>
+            {isEditing ? (
+                <input
+                    type="text"
+                    name="location"
+                    value={incident.location}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 rounded-md w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                />
+            ) : (
+                <p className="text-gray-600">{incident.location}</p>
+            )}
+        </div>
 
-                        {/* Campo imagen */}
-                        <div className="field">
-    <label className="block font-bold">Imagen:</label>
+        {/* Campo imagen */}
+        <div className="field">
+            <label className="block text-lg font-semibold text-gray-700 mb-1">Imagen:</label>
+            {isEditing ? (
+                <input
+                    type="text"
+                    name="image_url"
+                    value={incident.image_url}
+                    onChange={handleInputChange}
+                    className="border border-gray-300 rounded-md w-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+                />
+            ) : (
+                <img 
+                    src={incident.image_url} 
+                    alt="Imagen de la incidencia" 
+                    className="max-w-full max-h-60 object-cover rounded-md shadow"
+                />
+            )}
+        </div>
+    </div>
+
+    {/* Botones de acción */}
     {isEditing ? (
-        <input
-            type="text"
-            name="image_url"
-            value={incident.image_url}
-            onChange={handleInputChange}
-            className="p-inputtext p-component"
-        />
+        <div className="mt-6 flex flex-wrap gap-4">
+            <button type="submit" className="bg-green-500 text-white py-3 px-6 rounded-lg shadow-md transition hover:bg-green-600">
+                Guardar Cambios
+            </button>
+
+            <button 
+                className="bg-gray-100 text-gray-700 py-3 px-6 rounded-lg shadow-md transition hover:bg-gray-200"
+                onClick={() => {
+                    if (user.role === 'admin') setLocation('/incident');
+                    else setLocation('/request');
+                }}
+            >
+                Volver
+            </button>
+
+            <button 
+                type="button" 
+                className="bg-gray-400 text-white py-3 px-6 rounded-lg shadow-md transition hover:bg-gray-500"
+                onClick={() => setIsEditing(false)}
+            >
+                Cancelar
+            </button>
+
+            <button 
+                type="button" 
+                className="bg-red-500 text-white py-3 px-6 rounded-lg shadow-md transition hover:bg-red-600"
+                onClick={() => { 
+                    handleDeleteIncident(); 
+                    if (user.role === 'admin') setLocation('/incident');
+                    else setLocation('/request');
+                }}
+            >
+                Eliminar Incidencia
+            </button>
+        </div>
     ) : (
-        <img 
-            src={incident.image_url} 
-            alt="Imagen de la incidencia" 
-            style={{ maxWidth: '100%', maxHeight: '300px' }} 
-        />
+        <button 
+            type="button" 
+            className="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-md transition hover:bg-blue-600 mt-6"
+            onClick={() => setIsEditing(true)}
+        >
+            Editar Incidencia
+        </button>
     )}
-</div>
+</form>
 
-
-                    </div>
-
-                    {/* Botones de Guardar y Editar */}
-                    {isEditing ? (
-                        <div className="mt-4">
-                            <button type="submit" className="p-button p-component p-button-success" onClick= {handleFormSubmit}>Guardar Cambios</button>
-
-                            <button className='mx-2' onClick={()=> {  if (user) {
-            
-            if (user.role === 'admin') {
-                setLocation('/incident');
-            } else {
-                setLocation('/request');
-            }
-        }}}>volver</button>
-                           
-                            <button type="button" className="p-button p-component p-button-secondary ml-2" onClick={() => setIsEditing(false)}>
-                                Cancelar
-                            </button >
-                            <button  type="button" className="p-button p-component p-button-danger ml-2" onClick={ () => {handleDeleteIncident(); 
-                               if (user) {
-            
-            if (user.role === 'admin') {
-                setLocation('/incident');
-            } else {
-                setLocation('/request');
-            }
-        } }}>
-                         Eliminar Incidencia       
-                            </button>
-                        </div>
-                    ) : (
-                        <button type="button" className="p-button p-component p-button-primary mt-4" onClick={() => setIsEditing(true)}>
-                            Editar Incidencia
-                        </button>
-                    )}
-                </form>
             </div>
         </Layout>
     );
