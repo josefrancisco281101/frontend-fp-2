@@ -30,13 +30,27 @@ export const AuthContextProvider = ({ children }) => {
 
     })
 
+    const registerMutation = useMutation({
+      mutationKey: ['register'],
+      mutatuonFn: register,
+      onError: error => {
+        setErrorMessage(error.response?.data?.message || "Error desconocido");
+      },
+
+      onSuccess: (data) => {
+        localStorage.setItem('authToken', data.token);
+        navigate('/request');
+        setErrorMessage('');
+      },
+    })
+
     const setUserData = (data) => {
         setUser(data);
     }
     
 
     return (
-        <AuthContext.Provider value={{ user, setUserData, loginMutation, errorMessage }}>
+        <AuthContext.Provider value={{ user, setUserData, loginMutation, registerMutation, errorMessage }}>
             {children}
         </AuthContext.Provider>
     )

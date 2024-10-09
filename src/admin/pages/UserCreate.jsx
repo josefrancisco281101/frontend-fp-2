@@ -12,7 +12,7 @@ export default function UserCreate() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const [role, setRole] = useState(null);
   const toast = useRef(null);
 
@@ -21,6 +21,9 @@ export default function UserCreate() {
     { label: 'Resident', value: 'resident' }
   ];
 
+  const handleImageChange = (e) => {
+   setImage(e.target.files[0]);
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -29,9 +32,10 @@ export default function UserCreate() {
       lName,
       username,
       email,
-      password,
-      image,
-      role
+      password,      
+      role,
+      image: image? image.name : null
+
     };
 
     try {
@@ -87,9 +91,11 @@ export default function UserCreate() {
             <InputText id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="w-full" />
           </div>
 
-          <div className='field'>
-            <label htmlFor="image" className="block font-bold">Imagen (URL):</label>
-            <InputText id="image" value={image} onChange={(e) => setImage(e.target.value)} className="w-full" />
+          <div className="field">
+            <label htmlFor="image" className="block font-bold">
+              Imagen (opcional):
+            </label>
+            <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
           </div>
 
           <div className='field'>
