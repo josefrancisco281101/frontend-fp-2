@@ -7,14 +7,17 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { AuthContext } from '../../context/AuthContext';
+import { useLocation } from 'wouter';
 export default function IncidentCreate() {
     const { user } = useContext(AuthContext);
+    const [, setLocation] = useLocation();
     console.log(user)
   const [title, setTitle] = useState('');
   const [selectedType, setSelectedType] = useState(null);
   const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
+  const [location, setLocationn] = useState('');
   const [priority, setPriority] = useState('Normal');  
+  const [image_url, setImage_url] = useState(null);
   const toast = useRef(null);
 
   const incidentTypes = [
@@ -26,6 +29,11 @@ export default function IncidentCreate() {
 
   const priorities = ['Alta', 'Media', 'Normal', 'Baja'];
 
+
+  const handleImageChange = (e) => {
+    setImage_url(e.target.files[0]);
+   
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +50,9 @@ export default function IncidentCreate() {
       location,
       type: selectedType,
       priority,
-      status: "reported"    };
+      status: "reported",
+      image_url: image_url? image_url.name : null
+    };
   
    
   
@@ -77,7 +87,7 @@ export default function IncidentCreate() {
 
           <div className='field'>
             <label htmlFor="location" className="block font-bold">Ubicación:</label>
-            <InputText id="location" value={location} onChange={(e) => setLocation(e.target.value)} className="w-full" name='location' />
+            <InputText id="location" value={location} onChange={(e) => setLocationn(e.target.value)} className="w-full" name='location' />
           </div>
 
           <div className='field'>
@@ -106,10 +116,28 @@ export default function IncidentCreate() {
                 />
                 <label htmlFor={level}>{level}</label>
               </div>
+              
             ))}
           </div>
+          <div className="field">
+            <label htmlFor="image_url" className="block font-bold">
+              Imagen (opcional):
+            </label>
+            <input type="file" id="image_url" accept="image/*" onChange={handleImageChange} />
+          </div>
+          
 
-          <Button type="submit" label="Reportar Incidencia" severity="info" />
+          <Button  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105"  type="submit" label="Reportar Incidencia" severity="info" />
+
+          <button  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+           onClick={() => { if (user) {
+            if (user.role === 'admin') {
+              setLocation('/incident');
+            } else {
+              setLocation('/request');
+            }
+          }}}>volver</button>
+          
         </form>
 
         <Toast ref={toast} />
