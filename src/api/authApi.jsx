@@ -13,8 +13,8 @@ export const getMyInformation = async token => {
     return res.data;
   };
 
-  export const register = async ({fName, lName, username, email, password, role, image}) => {
-    const res = await axios.post('http://localhost:3000/api/auth/register', {fName, lName, username, email, password, role, image})
+  export const register = async ({fName, lName, username, email, password, role, image_url}) => {
+    const res = await axios.post('http://localhost:3000/api/auth/register', {fName, lName, username, email, password, role, image_url})
     
     return res.data;
   }

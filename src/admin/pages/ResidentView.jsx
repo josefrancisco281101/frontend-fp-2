@@ -24,6 +24,7 @@ export default function ResidentView() {
                 const filteredResidents = response.data.filter(user => user.role === 'resident');
                 
                 setResidents(filteredResidents);
+                
             } catch (error) {
                 console.error("Error al obtener los residentes:", error);
                 toast.current.show({ severity: "error", summary: "Error", detail: "No se pudieron cargar los residentes", life: 3000 });
@@ -44,7 +45,10 @@ export default function ResidentView() {
             <Toast ref={toast} />
             <div className="p-4">
 
-                <button onClick={handleNavigate}>crear nuevo usuario</button>
+            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 active:scale-95 transition-transform duration-300 mb-10" onClick={handleNavigate}>
+  Crear nuevo usuario
+</button>
+
                 <h2 className="text-2xl font-bold mb-4">Lista de Residentes</h2>
 
                 {residents.length > 0 ? (

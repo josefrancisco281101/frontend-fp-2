@@ -2,7 +2,6 @@ import React, { useState, useRef, useContext} from 'react';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
 import { InputText } from 'primereact/inputtext';
-import { RadioButton } from 'primereact/radiobutton';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
@@ -16,7 +15,7 @@ export default function IncidentCreate() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');  
-  const [image, setImage] = useState(null);
+  const [image_url, setImage_url] = useState(null);
   const [role, setRole] = useState(null);
   const toast = useRef(null);
 
@@ -30,7 +29,7 @@ export default function IncidentCreate() {
 
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    setImage_url(e.target.files[0]);
    
   };
 
@@ -47,7 +46,7 @@ export default function IncidentCreate() {
         email,
         password,
         role,       
-      image: image? image.name : null
+        image_url: image_url? image_url.name : null
     };
   
    
@@ -57,6 +56,16 @@ export default function IncidentCreate() {
         headers: {
           'Content-Type': 'application/json'        }
       });
+  
+      setfName('');
+      setLname('');
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setImage_url(null);
+      setRole(null);
+  
+     
       
       toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'usuario creado', life: 3000 });
     } catch (error) {
@@ -110,16 +119,15 @@ export default function IncidentCreate() {
 
           
           <div className="field">
-            <label htmlFor="image" className="block font-bold">
+            <label htmlFor="image_url" className="block font-bold">
               Imagen (opcional):
             </label>
-            <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
+            <input type="file" id="image_url" accept="image/*" onChange={handleImageChange} />
           </div>
-          
 
           <Button  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105"  type="submit" label="Crear Usuario" severity="info" />
 
-          <button  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+          <button  className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
            onClick={() => 
            
               setLocation('/resident')
