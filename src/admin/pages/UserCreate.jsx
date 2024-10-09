@@ -1,123 +1,131 @@
-import React, { useState, useContext, useRef } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import React, { useState, useRef, useContext} from 'react';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
 import { InputText } from 'primereact/inputtext';
+import { RadioButton } from 'primereact/radiobutton';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-
-export default function UserCreate() {
-  const {registerMutation, errorMessage} = useContext(AuthContext);   
-  const [fName, setFName] = useState('');
-  const [lName, setLName] = useState('');
+import { useLocation } from 'wouter';
+export default function IncidentCreate() {
+    
+    const [, setLocation] = useLocation();
+  
+  const [fName, setfName] = useState('');
+  const [lName, setLname] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('');  
   const [image, setImage] = useState(null);
   const [role, setRole] = useState(null);
   const toast = useRef(null);
 
-  const roleOptions = [
-    { label: 'Admin', value: 'admin' },
-    { label: 'Resident', value: 'resident' }
+  const roleTypes = [
+    { label: 'Residente ', value: 'resident' },
+    { label: 'Administrador', value: 'admin' }
+  
   ];
 
+  
+
+
   const handleImageChange = (e) => {
-   setImage(e.target.files[0]);
-  }
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const newUser = {
-      fName: e.target.fName.value,
-      lName: e.target.lName.value,
-      username: e.target.username.value,
-      email: e.target.email.value,
-      password: e.target.password.value,      
-      role: e.target.role.value,
-      image: image? image.name : null
-
-      
-
-    };
-    setFormError("");
-
-    await registerMutation.mutate(newUser);
-
-    try {
-      const response = await axios.post('http://localhost:3000/api/users', newUser, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'Usuario creado exitosamente', life: 3000 });
-      // Limpiar los campos después de enviar el formulario
-      // setFName('');
-      // setLName('');
-      // setUsername('');
-      // setEmail('');
-      // setPassword('');
-      // setImage('');
-      // setRole(null);
-    } catch (error) {
-      console.error('Error al crear el usuario:', error);
-      toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se pudo crear el usuario', life: 3000 });
-    }
+    setImage(e.target.files[0]);
+   
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+  
+  
+      const userData = {
+       
+        fName,
+        lName,
+        username,
+        email,
+        password,
+        role,       
+      image: image? image.name : null
+    };
+  
+   
+  
+    try {
+      const response = await axios.post('http://localhost:3000/api/users', userData, {
+        headers: {
+          'Content-Type': 'application/json'        }
+      });
+      
+      toast.current.show({ severity: 'success', summary: 'Éxito', detail: 'usuario creado', life: 3000 });
+    } catch (error) {
+      console.error(error.message);
+      toast.current.show({ severity: 'error', summary: 'Error', detail: 'Hubo un error al crear el usuario', life: 3000 });
+    }
+  };
+  
   return (
     <Layout>
-      <div className='user-create'>
+      <div className='incident-create'>
         <h1>Crear Usuario</h1>
         <form onSubmit={handleSubmit} className='flex flex-column gap-3'>
           
           <div className='field'>
             <label htmlFor="fName" className="block font-bold">Nombre:</label>
-            <InputText id="fName" value={fName} onChange={(e) => setFName(e.target.value)} className="w-full" />
+            <InputText id="fName" value={fName} onChange={(e) => setfName(e.target.value)} className="w-full" name='fName' />
           </div>
 
           <div className='field'>
-            <label htmlFor="lName" className="block font-bold">Apellido:</label>
-            <InputText id="lName" value={lName} onChange={(e) => setLName(e.target.value)} className="w-full" />
+            <label htmlFor="lName" className="block font-bold">apellido:</label>
+            <InputText id="lName" value={lName} onChange={(e) => setLname(e.target.value)} className="w-full" name='lName' />
           </div>
 
           <div className='field'>
-            <label htmlFor="username" className="block font-bold">Username:</label>
-            <InputText id="username" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full" />
+            <label htmlFor="username" className="block font-bold">nombre de usuario:</label>
+            <InputText id="username" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full" name='username' />
           </div>
 
           <div className='field'>
-            <label htmlFor="email" className="block font-bold">Email:</label>
-            <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full" />
+            <label htmlFor="email" className="block font-bold">correo electrónico:</label>
+            <InputText id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full" name='email' />
+          </div>
+          <div className='field'>
+            <label htmlFor="password" className="block font-bold"> contrasena:</label>
+            <InputText id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full" name='password' />
           </div>
 
           <div className='field'>
-            <label htmlFor="password" className="block font-bold">Contraseña:</label>
-            <InputText id="password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="w-full" />
+            <label htmlFor="roleType" className="block font-bold">Rol:</label>
+            <Dropdown
+              id="roleType"
+              value={role}
+              options={roleTypes}
+              onChange={(e) => setRole(e.value)}
+              placeholder="Seleccionar Rol"
+              className="w-full"
+              name='type'
+            />
           </div>
 
+          
           <div className="field">
             <label htmlFor="image" className="block font-bold">
               Imagen (opcional):
             </label>
             <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
           </div>
+          
 
-          <div className='field'>
-            <label htmlFor="role" className="block font-bold">Rol:</label>
-            <Dropdown
-              id="role"
-              value={role}
-              options={roleOptions}
-              onChange={(e) => setRole(e.value)}
-              placeholder="Seleccionar rol"
-              className="w-full"
-            />
-          </div>
+          <Button  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105"  type="submit" label="Crear Usuario" severity="info" />
 
-          <Button type="submit" label="Crear Usuario" severity="info" />
+          <button  className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+           onClick={() => 
+           
+              setLocation('/resident')
+            
+          }>volver</button>
+          
         </form>
 
         <Toast ref={toast} />

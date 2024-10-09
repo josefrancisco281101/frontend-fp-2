@@ -1,6 +1,6 @@
 import {useMutation} from '@tanstack/react-query';
 import { createContext, useState } from 'react';
-import { login } from '../api/authApi';
+import { login, register } from '../api/authApi';
 import { useLocation } from 'wouter';
 
 
