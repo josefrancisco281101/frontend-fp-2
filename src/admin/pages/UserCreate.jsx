@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import Layout from '../../layout/Layout';
 import { InputText } from 'primereact/inputtext';
@@ -7,6 +8,7 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 
 export default function UserCreate() {
+  const {registerMutation, errorMessage} = useContext(AuthContext);   
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
   const [username, setUsername] = useState('');
@@ -28,15 +30,20 @@ export default function UserCreate() {
     e.preventDefault();
     
     const newUser = {
-      fName,
-      lName,
-      username,
-      email,
-      password,      
-      role,
+      fName: e.target.fName.value,
+      lName: e.target.lName.value,
+      username: e.target.username.value,
+      email: e.target.email.value,
+      password: e.target.password.value,      
+      role: e.target.role.value,
       image: image? image.name : null
 
+      
+
     };
+    setFormError("");
+
+    await registerMutation.mutate(newUser);
 
     try {
       const response = await axios.post('http://localhost:3000/api/users', newUser, {

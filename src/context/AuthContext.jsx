@@ -32,7 +32,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const registerMutation = useMutation({
       mutationKey: ['register'],
-      mutatuonFn: register,
+      mutationFn: register,
       onError: error => {
         setErrorMessage(error.response?.data?.message || "Error desconocido");
       },
